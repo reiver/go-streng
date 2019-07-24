@@ -1,6 +1,7 @@
 package streng
 
 import (
+	"encoding/json"
 	"fmt"
 	"reflect"
 	"unsafe"
@@ -36,6 +37,17 @@ func (receiver Nullable) GoString() string {
 	}
 
 	return fmt.Sprintf("streng.Something(%q).Nullable()", receiver.value)
+}
+
+func (receiver Nullable) MarshalJSON() ([]byte, error) {
+	if Nothing().Nullable() == receiver {
+		return nil, errNothing
+	}
+	if Null() == receiver {
+		return json.Marshal(nil)
+	}
+
+	return json.Marshal(receiver.value)
 }
 
 func (receiver Nullable) Return() (string, error) {
