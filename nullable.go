@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"reflect"
+	"strings"
 	"unsafe"
 )
 
@@ -61,6 +62,27 @@ func (receiver Nullable) Return() (string, error) {
         return receiver.value, nil
 }
 
+// UnmarshalJSON makes streng.Nullable fit the json.Unmarshaler interface.
+//
+// Note that streng.Nullable.UnmarshalJSON() also accepts JSON numbers, and not just JSON strings.
+//
+// So if we have:
+//
+//	type Purchase struct {
+//		Amount streng.Nullable `json:"amount"`
+//	}
+//
+// It accepts this JSON with a string literal:
+//
+//	{
+//		"amount": "1.23"
+//	}
+//
+// But it also accepts this JSON with a number literal:
+//
+//	{
+//		"amount": 1.23
+//	}
 func (receiver *Nullable) UnmarshalJSON(data []byte) error {
 	if nil == receiver {
 
@@ -78,13 +100,16 @@ func (receiver *Nullable) UnmarshalJSON(data []byte) error {
 	case "null" == str:
 		*receiver = Null()
 		return nil
-	default:
+	case 2 <= len(str) && strings.HasPrefix(str, `"`) && strings.HasSuffix(str, `"`):
 		var dest string
 		if err := json.Unmarshal(data, &dest); nil != err {
 			return err
 		}
 
 		*receiver = someNullable(dest)
+		return nil
+	default:
+		*receiver = someNullable(string(data))
 		return nil
 	}
 }
