@@ -79,7 +79,12 @@ func (receiver *Nullable) UnmarshalJSON(data []byte) error {
 		*receiver = Null()
 		return nil
 	default:
-		*receiver = someNullable(string(data))
+		var dest string
+		if err := json.Unmarshal(data, &dest); nil != err {
+			return err
+		}
+
+		*receiver = someNullable(dest)
 		return nil
 	}
 }
