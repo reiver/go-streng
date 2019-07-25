@@ -85,7 +85,7 @@ func (receiver Option) Else(value string) Option {
 	return receiver
 }
 
-// Map returns an ‘streng.Option’ containing the result of ‘fn’ applied to the values inside this ‘streng.Option’;
+// Map returns an ‘streng.Option’ containing the result of ‘fn’ applied to the value inside this ‘streng.Option’;
 // if this ‘streng.Option’ is ‘streng.Nothing()’, then it just returns ‘streng.Nothing()’.
 func (receiver Option) Map(fn func(string)string) Option {
 	if Nothing() == receiver {
@@ -114,7 +114,7 @@ func (receiver Option) Return() (string, error) {
 	return receiver.value, nil
 }
 
-// Then returns an ‘streng.Option’ containing the result of ‘fn’ applied to the values inside this ‘streng.Option’;
+// Then returns an ‘streng.Option’ containing the result of ‘fn’ applied to the value inside this ‘streng.Option’;
 // if this ‘streng.Option’ is ‘streng.Nothing()’, then it just returns ‘streng.Nothing()’.
 func (receiver Option) Then(fn func(string)Option) Option {
 	if Nothing() == receiver {
