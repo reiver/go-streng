@@ -136,6 +136,24 @@ func (receiver Option) Then(fn func(string)Option) Option {
 	return fn(receiver.value)
 }
 
+func (receiver *Option) UnmarshalJSON(data []byte) error {
+	var nullable Nullable
+
+	if err := nullable.UnmarshalJSON(data); nil != err {
+		return err
+	}
+
+	if Nothing().Nullable() == nullable {
+		return errNothing
+	}
+	if Null() == nullable {
+		return errNull
+	}
+
+	*receiver = Something(receiver.value)
+	return nil
+}
+
 // Unwrap returns the string inside, if there is one inside.
 func (receiver Option) Unwrap() (string, bool) {
 	if Nothing() == receiver {
