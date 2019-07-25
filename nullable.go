@@ -177,7 +177,7 @@ func (receiver Nullable) Unwrap() (string, bool) {
 // Value makes ‘streng.Nullable’ fit the database/sql/driver.Valuer interface.
 func (receiver Nullable) Value() (driver.Value, error) {
 	if Nothing().Nullable() == receiver {
-		return receiver, errNothing
+		return nil, errNothing
 	}
 	if Null() == receiver {
 		return nil, nil

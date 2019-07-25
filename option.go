@@ -166,7 +166,7 @@ func (receiver Option) Unwrap() (string, bool) {
 // Value makes ‘streng.Option’ fit the database/sql/driver.Valuer interface.
 func (receiver Option) Value() (driver.Value, error) {
 	if Nothing() == receiver {
-		return receiver, errNothing
+		return nil, errNothing
 	}
 
 	return receiver.value, nil
