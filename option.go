@@ -1,6 +1,7 @@
 package streng
 
 import (
+	"database/sql/driver"
 	"fmt"
 )
 
@@ -110,4 +111,13 @@ func (receiver Option) Unwrap() (string, bool) {
 	}
 
 	return receiver.value, true
+}
+
+// Value makes ‘streng.Option’ fit the database/sql/driver.Valuer interface.
+func (receiver Option) Value() (driver.Value, error) {
+	if Nothing() == receiver {
+		return receiver, errNothing
+	}
+
+	return receiver.value, nil
 }
