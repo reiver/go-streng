@@ -44,7 +44,6 @@ func (receiver Nullable) GoString() string {
 	if Nothing().Nullable() == receiver {
 		return "streng.Nothing().Nullable()"
 	}
-
 	if Null() == receiver {
 		return "streng.Null()"
 	}
