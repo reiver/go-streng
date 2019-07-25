@@ -41,6 +41,18 @@ func (receiver Nullable) Else(value string) Nullable {
 
         return receiver
 }
+
+func (receiver Nullable) ElseUnwrap(value string) string {
+	if Nothing().Nullable() == receiver {
+		return value
+	}
+	if Null() == receiver {
+		return value
+	}
+
+	return receiver.value
+}
+
 func (receiver Nullable) GoString() string {
 	if Nothing().Nullable() == receiver {
 		return "streng.Nothing().Nullable()"
