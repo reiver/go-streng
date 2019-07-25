@@ -88,6 +88,17 @@ func (receiver Nullable) Return() (string, error) {
         return receiver.value, nil
 }
 
+// Then returns an ‘streng.Nullable’ containing the result of ‘fn’ applied to the value inside this ‘streng.Nullable’;
+// if this ‘streng.Nullable’ is ‘streng.Nothing().Nullable()’, then it just returns ‘streng.Nothing()’;
+// and if this ‘streng.Nullable’ is ‘streng.Null()’, then it just returns ‘streng.Null()’.
+func (receiver Nullable) Then(fn func(string)Nullable) Nullable {
+	if Nothing() == receiver {
+		return receiver
+	}
+
+	return fn(receiver.value)
+}
+
 // UnmarshalJSON makes streng.Nullable fit the json.Unmarshaler interface.
 //
 // Note that streng.Nullable.UnmarshalJSON() also accepts JSON numbers, and not just JSON strings.
