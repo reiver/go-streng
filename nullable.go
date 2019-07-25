@@ -1,6 +1,7 @@
 package streng
 
 import (
+	"database/sql/driver"
 	"encoding/json"
 	"fmt"
 	"reflect"
@@ -134,4 +135,16 @@ func (receiver Nullable) Unwrap() (string, bool) {
 	}
 
 	return receiver.value, true
+}
+
+// Value makes ‘streng.Nullable’ fit the database/sql/driver.Valuer interface.
+func (receiver Nullable) Value() (driver.Value, error) {
+	if Nothing().Nullable() == receiver {
+		return receiver, errNothing
+	}
+	if Null() == receiver {
+		return nil, nil
+	}
+
+	return receiver.value, nil
 }
