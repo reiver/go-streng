@@ -28,6 +28,18 @@ func someNullable(value string) Nullable {
 	}
 }
 
+// Else defaults this ‘streng.Nullable’ to ‘value’ if this ‘streng.Nullable’ has a value of ‘streng.Nothing().Nullable()’,
+// or a value of ‘streng.Null()’, else it just returns itself as is.
+func (receiver Nullable) Else(value string) Nullable {
+        if Nothing().Nullable() == receiver {
+                return Something(value).Nullable()
+        }
+        if Null() == receiver {
+                return Something(value).Nullable()
+        }
+
+        return receiver
+}
 func (receiver Nullable) GoString() string {
 	if Nothing().Nullable() == receiver {
 		return "streng.Nothing().Nullable()"
