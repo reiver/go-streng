@@ -92,7 +92,7 @@ func (receiver Nullable) Return() (string, error) {
 // if this ‘streng.Nullable’ is ‘streng.Nothing().Nullable()’, then it just returns ‘streng.Nothing()’;
 // and if this ‘streng.Nullable’ is ‘streng.Null()’, then it just returns ‘streng.Null()’.
 func (receiver Nullable) Then(fn func(string)Nullable) Nullable {
-	if Nothing() == receiver {
+	if Nothing().Nullable() == receiver {
 		return receiver
 	}
 
