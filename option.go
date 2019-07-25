@@ -103,6 +103,10 @@ func (receiver Option) Map(fn func(string)string) Option {
 	return Something(fn(receiver.value))
 }
 
+func (receiver Option) MarshalJSON() ([]byte, error) {
+	return receiver.Nullable().MarshalJSON()
+}
+
 // Nullable returns the equivalent ‘streng.Nullable’ for this ‘streng.Option’.
 func (receiver Option) Nullable() Nullable {
 	if Nothing() == receiver {
