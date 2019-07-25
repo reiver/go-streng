@@ -85,6 +85,14 @@ func (receiver Option) Else(value string) Option {
 	return receiver
 }
 
+func (receiver Option) ElseUnwrap(value string) string {
+	if Nothing() == receiver {
+		return value
+	}
+
+	return receiver.value
+}
+
 // Map returns an ‘streng.Option’ containing the result of ‘fn’ applied to the value inside this ‘streng.Option’;
 // if this ‘streng.Option’ is ‘streng.Nothing()’, then it just returns ‘streng.Nothing()’.
 func (receiver Option) Map(fn func(string)string) Option {
