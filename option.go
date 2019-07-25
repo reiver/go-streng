@@ -1,5 +1,9 @@
 package streng
 
+import (
+	"fmt"
+)
+
 // Option is an ‘option type’ for string.
 //
 // It can contain:
@@ -60,6 +64,14 @@ func Something(value string) Option {
 		loaded: true,
 		value:  value,
 	}
+}
+
+func (receiver Option) GoString() string {
+	if Nothing() == receiver {
+		return "streng.Nothing()"
+	}
+
+	return fmt.Sprintf("streng.Something(%q)", receiver.value)
 }
 
 // Else defaults this ‘streng.Option’ to ‘value’ if this ‘streng.Option’ has a value of ‘streng.Nothing()’,
