@@ -52,7 +52,7 @@ func (receiver Nullable) GoString() string {
 	return fmt.Sprintf("streng.Something(%q).Nullable()", receiver.value)
 }
 
-// Map returns an ‘streng.Nullable’ containing the result of ‘fn’ applied to the values inside this ‘streng.Nullable’;
+// Map returns an ‘streng.Nullable’ containing the result of ‘fn’ applied to the value inside this ‘streng.Nullable’;
 // if this ‘streng.Nullable’ is ‘streng.Nothing().Nullable()’, then it just returns ‘streng.Nothing()’;
 // or if this ‘streng.Nullable’ is ‘streng.Null()’, then it just returns ‘streng.Null()’;
 func (receiver Nullable) Map(fn func(string)string) Nullable {
